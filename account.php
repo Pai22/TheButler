@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['id'])) {
+    header("location:login.php");
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,10 +17,10 @@
     
     <title>Account</title>
 </head>
-<body>
+<body style="background-color:#000000;">
+<?php include "nav.php" ?>
     <div class="container">
-        <h1 style="text-align: center">The Butler</h1>
-        <?php include "nav2.php" ?>
+        
         <div class = "row mt-4">
             <div class="col-lg-3 col-md-2 col-sm-1"></div>
             <div class="col-lg-6 col-md-8 col-sm-10">
@@ -24,8 +31,7 @@
                         <form action="#" method="post">
                             <div class="row">
                             <label for="fileInput" class="circle-container">
-                                <img src="#" alt="Your Image" id="image">
-                                <div class="icon-overlay" onclick="openFileInput()"><i class="bi bi-upload"> upload image</i></div>
+                                <img src="#" alt="Your Image" id="image"><br>
                                 <input type="file" id="fileInput" accept="image/*" onchange="displayImage()">
                             </label>
                             <script>
