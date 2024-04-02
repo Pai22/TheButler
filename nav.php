@@ -47,8 +47,8 @@
                 Logout
               </a>
             </li>
-
-          <?php } else { ?>
+            
+          <?php } elseif (isset($_SESSION['id']) && $_SESSION['role'] == 'm') { ?>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="account.php">
                 <i class="bi bi-person-circle me-2"></i>
@@ -56,7 +56,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="myroom.php">
                 <i class="bi bi-house-heart me-2"></i>
                 My Room
               </a>
