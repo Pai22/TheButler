@@ -1,12 +1,13 @@
-<?php 
+<?php
 session_start();
-if(isset($_SESSION['id'])){
+if (!isset($_SESSION['id'])) {
     header("location:index.php");
     die();
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,44 +17,45 @@ if(isset($_SESSION['id'])){
     <link href="accountnew.css" rel="stylesheet">
     <title>Account</title>
 </head>
+
 <body>
+    <?php include "nav.php" ?>
     <div class="container">
-        <h1 style="text-align: center">The Butler</h1>
-        <?php include "nav2.php" ?>
-        <div class = "row mt-4">
+
+        <div class="row mt-4">
             <div class="col-lg-3 col-md-2 col-sm-1"></div>
             <div class="col-lg-6 col-md-8 col-sm-10">
                 <br>
                 <div class="card">
-                    <div class="card-header text-white fs-5" style ="background-color:#C6824B"><i class="bi bi-person-circle text-black" style="font-size:25px"></i> My Account</div>
+                    <div class="card-header text-white fs-5" style="background-color:#C6824B"><i class="bi bi-person-circle text-black" style="font-size:25px"></i> My Account</div>
                     <div class="card-body">
                         <form action="#" method="post">
                             <div class="row">
-                            <label for="fileInput" class="circle-container">
-                                <img src="#" alt="Your Image" id="image">
-                                <div class="icon-overlay" onclick="openFileInput()"><i class="bi bi-upload"> upload image</i></div>
-                                <input type="file" id="fileInput" accept="image/*" onchange="displayImage()">
-                            </label>
-                            <script>
-                                function displayImage() {
-                                    input = document.getElementById("fileInput");
-                                    image = document.getElementById("image");
-                                    file = input.files[0];
-                                    if (file) {
-                                        reader = new FileReader();
-                                        reader.onload = function (e) {
-                                            image.src = e.target.result;
-                                        };
-                                        reader.readAsDataURL(file);
+                                <label for="fileInput" class="circle-container">
+                                    <img src="#" alt="Your Image" id="image">
+                                    <div class="icon-overlay" onclick="openFileInput()"><i class="bi bi-upload"> upload image</i></div>
+                                    <input type="file" id="fileInput" accept="image/*" onchange="displayImage()">
+                                </label>
+                                <script>
+                                    function displayImage() {
+                                        input = document.getElementById("fileInput");
+                                        image = document.getElementById("image");
+                                        file = input.files[0];
+                                        if (file) {
+                                            reader = new FileReader();
+                                            reader.onload = function(e) {
+                                                image.src = e.target.result;
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
                                     }
-                                }
-                            </script>
+                                </script>
                             </div>
                             <div class="row mt-3">
-                            <label class="col-lg-3 col-form-label">Username :</label>
-                            <div class="col-lg-9">
-                                <input type="text" name="login" required class="form-control">
-                            </div>
+                                <label class="col-lg-3 col-form-label">Username :</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="login" required class="form-control">
+                                </div>
                             </div>
                             <div class="row mt-3">
                                 <label class="col-lg-3 col-form-label">Password :</label>
@@ -63,7 +65,7 @@ if(isset($_SESSION['id'])){
                             </div>
 
                             <div class="row mt-3">
-                                <label class="col-lg-3 col-form-label" >Re-password :</label>
+                                <label class="col-lg-3 col-form-label">Re-password :</label>
                                 <div class="col-lg-9">
                                     <input type="password" name="pwd2" id="pwd2" onblur="OnBlurPwd()" required class="form-control">
                                 </div>
@@ -115,6 +117,7 @@ if(isset($_SESSION['id'])){
         </div>
     </div>
     <br><br>
-    
+    <?php include "nav2.php" ?>
 </body>
+
 </html>

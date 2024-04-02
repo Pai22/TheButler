@@ -50,7 +50,7 @@
 
           <?php } else { ?>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+              <a class="nav-link active" aria-current="page" href="account.php">
                 <i class="bi bi-person-circle me-2"></i>
                 Account
               </a>
