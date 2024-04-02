@@ -21,7 +21,7 @@ if (!isset($_SESSION['id'])) {
             //alert(id+login+gender+email+role+name);            
             document.getElementById('image').value=image;
             document.getElementById('username').value=username;
-            document.getElementById('password').value=password;
+            
             document.getElementById('name').value=name.replace(/###/g,' ');
             document.getElementById('gender').value=gender;
             document.getElementById('email').value=email;
@@ -60,7 +60,11 @@ if (!isset($_SESSION['id'])) {
                     
                     while($row = $result->fetch()){                        
                             echo 
-                            "<label class = col-lg-3 col-form-label>Username :</label>
+                            "<img src=$row[0] >
+                            <br>
+                            <br>
+
+                            <label class = col-lg-3 col-form-label>Username :</label>
                             <div class=col-lg-9>
                             <input type= text name= username value= $row[1]  required class=form-control disabled>
                             </div><br>
