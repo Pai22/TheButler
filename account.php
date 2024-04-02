@@ -24,7 +24,7 @@ if (!isset($_SESSION['id'])) {
             document.getElementById('password').value=password;
             document.getElementById('name').value=name.replace(/###/g,' ');
             document.getElementById('gender').value=gender;
-            document.getElementById('email').value=email;
+            
            
         }
     </script>
