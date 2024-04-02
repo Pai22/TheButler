@@ -7,7 +7,9 @@
     $email = $_POST['email'];
 
     $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8","root","");
-    $sql = "UPDATE user SET image=image,username='$username',name='$name',gender='$gender',email='$email' WHERE id=$user_id";
+    $sql = "SELECT username,name,gender, FROM  user LIMIT id=1";
+    $result = $conn->query($sql);
+    $sql = "UPDATE user SET image=image,username='$username',name='$name',gender='$gender',email='$email' WHERE id=$username=number_room";
     $query=$conn->exec($sql);
     if($query){
         $_SESSION['editaccount']=1;
