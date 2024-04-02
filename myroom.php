@@ -43,7 +43,7 @@ if (!isset($_SESSION['id'])) {
                             <div class="row mt-3">
                                 <label class="col-lg-4 col-form-label">QR code:</label>
                                 <div class="col-lg-8">
-                                   <img src="QR-Code.jpg" width="200" height="400">
+                                   <img src="qr.jpg" width="200" height="400">
                                 </div>
                             </div>
                             <div class="row mt-3">
