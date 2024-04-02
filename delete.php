@@ -10,7 +10,7 @@
         header("location:index.php");      
         die();
     }
-    else {header("#");
+    else {header("location:index.php");
         die();
     }
     
