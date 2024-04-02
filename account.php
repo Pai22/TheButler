@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['id'])) {
+    header("location:login.php");
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,25 +13,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="accountnew.css" rel="stylesheet">
+    
     <title>Account</title>
 </head>
-<body>
+<body style="background-color:#000000;">
+<?php include "nav.php" ?>
     <div class="container">
-        <h1 style="text-align: center">The Butler</h1>
-        <?php include "nav2.php" ?>
-        <div class = "row mt-4">
+        <div class = "row mt-5">
             <div class="col-lg-3 col-md-2 col-sm-1"></div>
             <div class="col-lg-6 col-md-8 col-sm-10">
-                <br>
+                
                 <div class="card">
                     <div class="card-header text-white fs-5" style ="background-color:#C6824B"><i class="bi bi-person-circle text-black" style="font-size:25px"></i> My Account</div>
                     <div class="card-body">
                         <form action="#" method="post">
                             <div class="row">
                             <label for="fileInput" class="circle-container">
-                                <img src="#" alt="Your Image" id="image">
-                                <div class="icon-overlay" onclick="openFileInput()"><i class="bi bi-upload"> upload image</i></div>
+                                <img src="meow.jpg" alt="Your Image" id="image">
                                 <input type="file" id="fileInput" accept="image/*" onchange="displayImage()">
                             </label>
                             <script>
@@ -108,6 +113,5 @@
         </div>
     </div>
     <br><br>
-    
 </body>
 </html>

@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['id'])) {
+    header("location:login.php");
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +15,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>The Butler</title>
 </head>
-<body>
-    <div class ="bg-dark">
+<body style="background-color:#000000;">
+<?php include "nav.php" ?>
     <div class="container">
-        <h1 style="text-align: center">The Butler</h1>
-        <?php include "nav2.php" ?>
         <div class = "row mt-5">
             <div class="col-lg-3 col-md-2 col-sm-1"></div>
             <div class="col-lg-6 col-md-8 col-sm-10">
