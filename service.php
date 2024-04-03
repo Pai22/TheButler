@@ -39,22 +39,22 @@ if (isset($_GET['name'])) {
 
             <?php
             $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
-            $sql = "SELECT t1.user_id,t2.datetime,t2.service,t3.number_room FROM services as t1
-            INNER JOIN myroom as t2 ON (t1.user_id = t2.user_id)
-            INNER JOIN user as t3 ON (t1.user_id=t3.id) ORDER BY t2.datetime DESC";
+            $sql = "SELECT t1.date_service,t1.time_service,t2.name,t3.number_room,t1.id FROM showservices as t1
+            INNER JOIN services as t2 ON (t1.service_id = t2.id)
+            INNER JOIN user as t3 ON (t1.user_id=t3.id) ORDER BY t1.date_service DESC";
             $result = $conn->query($sql);
             while ($row = $result->fetch()) {
                 echo "<tr><td>
                                     <div class='card ' style=width: 10rem;>
                                         <div class='card-body'>
-                                            <p class='card-text'>$row[3] style = text-decoration:none>$row[0]<br>$row[2] - $row[1]</p>";
+                                            <h4 class='card-text' style=color:blue;> $row[2]</h4>
+                                            ห้อง $row[3]<br>
+                                            วัน-เวลานัดหมาย $row[0] - $row[1]</p>";
                 if (isset($_SESSION['id']) && ($_SESSION['role'] == 's')) {
-                    echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end me-3'
-                                            onclick = 'return myFunction()'><i class='bi bi-trash'></i> Delete</a>
-                                            
+                    echo "<a href=service_delete.php?id=$row[4] class = 'btn btn-warning btn-sm mt-2 float-end '
+                                            onclick = 'return myFunction()'><i class='bi bi-check-circle'></i> Done</a>
                                          </div>
                                     </div>
-                                
                                     </td>";
                     echo "</tr>";
                 }

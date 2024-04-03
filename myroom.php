@@ -26,7 +26,7 @@ if (!isset($_SESSION['id'])) {
                 <div class="card">
                     <div class="card-header text-white" style="background-color: #C6824B;">My Room</div>
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="myroomsave.php" method="post">
                             <div class="row">
                                 <label class="col-lg-3 col-form-label">No.room: 101</label>
                             </div>
@@ -56,6 +56,7 @@ if (!isset($_SESSION['id'])) {
                                             $sql = "SELECT * FROM services";
                                             foreach ($conn->query($sql) as $row) {
                                                 echo "<option value = " . $row['id'] . "> " . $row['name'] . "</option>";
+                                                
                                             }
                                             $conn = null;
 
@@ -64,9 +65,10 @@ if (!isset($_SESSION['id'])) {
                                     </span>
                                 </div>
                                 <div class="col-lg-5 mt-2">
-                                    <input type="date" name="#" class="form-control" style="height:25px;width:200px;">
+                                    <?php ?>
+                                    <input type="date" name="date" class="form-control" style="height:25px;width:200px;">
                                     <div class="mt-2">
-                                        <input type="time" name="#" class="form-control" style="height:25px;width:200px;">
+                                        <input type="time" name="time" class="form-control" style="height:25px;width:200px;">(เวลาทำการ 8.00-16.00)
                                     </div>
                                 </div>
                             </div>
