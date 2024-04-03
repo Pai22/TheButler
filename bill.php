@@ -11,7 +11,7 @@ if (isset($_GET['name'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room</title>
+    <title>bill</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -19,6 +19,18 @@ if (isset($_GET['name'])) {
 
 <body style="background-color: black;">
         <?php include "nav.php" ?>
+        <div class="container" style="margin-top: 50px;">
+            <div class="card bg-dark">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs text-w">
+                        <li class="nave-item"><a href="#" class="nav-link">ค่าน้ำ</a></li>
+                        <li class="nave-item"><a href="#" class="nav-link">ค่าไฟ</a></li>
+                        <li class="nave-item"><a href="#" class="nav-link">ค่าห้อง</a></li>
+                        <li class="nave-item"><a href="#" class="nav-link">รวม</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <span>
             <div class="mt-5 mb-3 d-flex justify-content-between " style="float:left ;">
                 <h6 style="color: white;"><i class="bi bi-building-fill"></i> Total Rooms</h6>
