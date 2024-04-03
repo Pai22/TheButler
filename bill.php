@@ -28,7 +28,7 @@
                 
             
             <form action="bill_save.php" method="post">
-                <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text id="price" name="price" required class=form-control disabled style="height:30px;width:100px" oninput="calculate(this)"></p>
+                <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text id="price" name="price" required class=form-control style="height:30px;width:100px" oninput="calculate(this)"></p>
                 <button type="submit" class = 'btn btn-success mt-1'>บันทึก</button>
             </form>
         </div>
