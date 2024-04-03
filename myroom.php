@@ -26,19 +26,11 @@ if (!isset($_SESSION['id'])) {
                     <div class="card-body">
                         <form action="#" method="post">
                             <div class="row">
-                                <label class="col-lg-3 col-form-label">No.room:</label>
-                                <div class="col-lg-3 mt-2">
-                                    <input type="text" name="#" required class="form-control" style="height:30px;width:150px;"> 
-                                </div>
-                                <div class="col-lg-6 mt-2">
-                                    <button type="submit" class="btn btn-primary btn-sm ">ค้นหา</button>
-                                </div>
+                                <label class="col-lg-3 col-form-label">No.room: 101</label>
                             </div>
                             <div class="row mt-3">
-                                <label class="col-lg-3 col-form-label">ค่าเช่า:</label>
-                                <div class="col-lg-9 mt-2">
-                                    <input type="text" name="#" required class="form-control" style="height:30px;width:100px;">
-                                </div>
+                                <label class="col-lg-3 col-form-label">ค่าเช่า :</label>
+                                <input type= text name= username value= ""  required class=form-control disabled style="height:30px;width:100px">
                             </div>
                             <div class="row mt-3">
                                 <label class="col-lg-4 col-form-label">QR code:</label>
