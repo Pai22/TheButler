@@ -32,35 +32,35 @@ if (!isset($_SESSION['id'])) {
                 <?php if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) { ?>
                     <div><a href="newpost.php" class="btn btn-secondary "><i class="bi bi-plus"></i> News</a></div>
                 <?php } ?>
-                <div class="container "></div>
-                <div class="mt-3 d-flex justify-content-between">
-                    <table class="table table-borderless  mt-4">
-                        <?php
-                        $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
-                        $sql = "SELECT t1.title,t1.id,t2.username,t1.post_date,t1.user_id FROM community_admin as t1
+                <div class="container">
+                    <div class="mt-3 d-flex justify-content-between">
+                        <table class="table table-borderless  mt-4">
+                            <?php
+                            $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+                            $sql = "SELECT t1.title,t1.id,t2.username,t1.post_date,t1.user_id,t1.content FROM community_admin as t1
                                 INNER JOIN user as t2 ON (t1.user_id = t2.id) ORDER BY t1.post_date DESC";
 
-                        $result = $conn->query($sql);
-                        while ($row = $result->fetch()) {
-                            echo "<tr><td>
+                            $result = $conn->query($sql);
+                            while ($row = $result->fetch()) {
+                                echo "<tr><td>
                                     <div class='card ' style=width: 10rem;>
                                         <div class='card-body'>
-                                            <p class='card-text'><a href=post.php?id=$row[1] style = text-decoration:none>$row[0]</a><br>$row[2] - $row[3]</p>";
-                            if(isset($_SESSION['id']) && ($_SESSION['role']=='a' ) ){
-                            echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end me-3'
+                                            <h4 class='card-text' style=color:blue;> $row[0]</h4>
+                                            $row[5]<br>
+                                            $row[2] - $row[3]</p>";
+                                if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
+                                    echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end '
                                             onclick = 'return myFunction()'><i class='bi bi-trash'></i> Delete</a>
-                                            
                                          </div>
                                     </div>
-                                
                                     </td>";
-                            echo "</tr>";
+                                    echo "</tr>";
+                                }
                             }
-                            
-                        }
-                        $conn = null;
-                        ?>
-                    </table>
+                            $conn = null;
+                            ?>
+                        </table>
+                    </div>
                 </div>
 
             </div>
