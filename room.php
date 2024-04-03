@@ -16,18 +16,17 @@ if (isset($_GET['name'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script>
-        function myFunction() {
-            let r = confirm("ต้องการจะลบจริงหรือไม่");
-            return r;
-        }
-    </script>
+function showPopup() {
+  // เปิดหน้าต่าง pop-up ด้วยความกว้าง 500px และความสูง 500px
+  window.open('popup_image.php', 'popup', 'width=500,height=500');
+}
+</script>
 </head>
 
 <body style="background-color: black;">
-    <div class="container">
-        <h1 style="text-align: center;">THE BUTLER</h1>
-        <?php include "nav.php" ?>
-
+    <?php include "nav.php" ?>
+<div class="container">
+        
         <span>
             <div class="mt-5 mb-3 d-flex justify-content-between " style="float:left ;">
                 <h6 style="color: white;"><i class="bi bi-building-fill"></i> Total Rooms</h6>
@@ -60,48 +59,25 @@ if (isset($_GET['name'])) {
         </span>
 
         <table class="table table-striped mt-4">
-
             <?php
-            $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-            if (isset($_GET['catid'])) {
-                $catid = $_GET['catid'];
-                $sql = "SELECT t3.name,t1.title,t1.id,t2.login,t1.post_date,t1.user_id,t2.role FROM post as t1
-            INNER JOIN user as t2 ON (t1.user_id = t2.id)
-            INNER JOIN category as t3 ON (t1.cat_id=t3.id) WHERE (t1.cat_id = $catid) ORDER BY t1.post_date DESC";
-            } else {
-                $sql = "SELECT t3.name,t1.title,t1.id,t2.login,t1.post_date,t1.user_id,t2.role FROM post as t1
-            INNER JOIN user as t2 ON (t1.user_id = t2.id)
-            INNER JOIN category as t3 ON (t1.cat_id=t3.id) ORDER BY t1.post_date DESC";
-            }
+            $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+            $sql="select id,username,name,gender,email,image from user";
             $result = $conn->query($sql);
             while ($row = $result->fetch()) {
-                if ($row[6] == 'b') {
-                    if ($row[6] == 'm' || $row[6] == 'a') {
-                        echo "<tr><td>><div><i class=bi bi-person-check></i></div> [ $row[0] ] <a href=post.php?id=$row[2]
-                    style = text-decoration:none>$row[1]</a><br>$row[3] - $row[4]</td>";
-                    }
-                } else {
-                    echo "<tr><td><div><i class=bi bi-person-check></i></div> [ $row[0] ] <a href=post.php?id=$row[2]
-                style = text-decoration:none>$row[1]</a><br>$row[3] - $row[4]</td>";
+                if ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['1']){
+                    echo "<tr><td><a href=bill.php? style = text-decoration:none>Room : $row[1]</a>";
+                    echo "<td>";
                     if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['5'])) {
                         echo "<td>";
-                        echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end me-3'
-                    onclick = 'return myFunction()'>
-                    <i class='bi bi-trash'></i></a>";
-                        if ($_SESSION['user_id'] == $row['5']) {
-                            echo "<a href=editpost.php?id=$row[2]
-                        class = 'btn btn-warning btn-sm mt-2 float-end me-2'>
-                        <i class='bi bi-pencil-fill'></i></a>";
-                        }
-                        echo "</td>";
-                    } else {
-                        echo "<td></td>";
-                    }
-                    echo "</tr>";
-                }
-            }
+                        echo "<button onclick=showPopup()>
+                        <i class='bi bi-receipt'></i></a>"
+                        ;
+                    
+            }}
+        }
             $conn = null;
             ?>
+            
         </table>
     </div>
 </body>
