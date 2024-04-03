@@ -21,6 +21,17 @@
             <div class="card" style="height:520px;width:500px">
             <div class="card-body">
                 <br>
+                <?php
+            $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+            $sql="select username from user";
+            $result = $conn->query($sql);
+            $i=0;
+            while ($row = $result->fetch()) {
+                $i+=1;
+                if ($_SESSION['role'] == 'a') {
+                    echo "<tr><td>Room : $row[0]";
+                    echo "</td></tr>";}}?>
+
                 <h5 class="card-text">น้ำใช้ไป :</h5><input type= text id="num1" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
                 <h5 class="card-text">ไฟใช้ไป:</h5><input type= text id="num2" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
                 <h5 class="card-text">ค่าห้อง:</h5><input type= text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>

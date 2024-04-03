@@ -34,21 +34,25 @@ function showPopup() {
             $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
             $sql="select id,username,name,gender,email,image from user";
             $result = $conn->query($sql);
+            $i=0;
             while ($row = $result->fetch()) {
-                if ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['1']){
-                    echo "<tr><td><a href=bill.php? style = text-decoration:none>Room : $row[1]</a>";
+                $i+=1;
+                if ($_SESSION['role'] == 'a'){
+                    echo "<tr><td><a href=bill.php?$i style = text-decoration:none>Room : $row[1]</a>";
                     echo "<td>";
-                    if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['5'])) {
+                
+                    if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
                         echo "<td>";
                         echo "<button onclick=showPopup()>
                         <i class='bi bi-receipt'></i></a></td>";
                         echo "<td>";
                         echo "<button onclick=confirm()>
                         confirm";
-                    
+                            
             }}
         }
             $conn = null;
+            
             ?>
             
         </table>
