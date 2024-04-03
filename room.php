@@ -25,40 +25,11 @@ function showPopup() {
 
 <body style="background-color: black;">
     <?php include "nav.php" ?>
-<div class="container">
-        
-        <span>
-            <div class="mt-5 mb-3 d-flex justify-content-between " style="float:left ;">
-                <h6 style="color: white;"><i class="bi bi-building-fill"></i> Total Rooms</h6>
-            </div>
-            <div class="mt-5 mb-3 mr-5 d-flex justify-content-between" style="float:right ;">
-                <div>
-                    <label style="color: white;"><i class="bi bi-calendar-month-fill"></i> เดือน : </label>
-                    <span class="dropdown ">
-                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php echo $catname; ?>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby='Button2'>
-                            <li><a class="dropdown-item" href="index.php">ทั้งหมด</a></li>
-                            <?php
-                            $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-                            $sql = "SELECT *FROM category";
-                            foreach ($conn->query($sql) as $row) {
-                                echo "<li><a class = dropdown-item href=index.php?catid=$row[id]&name=$row[name]>$row[name]</a></li>";
-                            }
-                            $conn = null;
-                            ?>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-            <div class="mt-5 mb-3 mx-3 d-flex justify-content-between " style="float:right ;">
-                <a href="newpost.php" class="btn btn-success btn-sm "><i class="bi bi-house-add-fill"></i></i> เพิ่มห้อง</a>
-            </div>
-
-        </span>
-
-        <table class="table table-striped mt-4">
+    <div class="container" style="margin-top: 50px;">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title color: black;"><i class="bi bi-building-fill"></i> Total Rooms</h6>
+                <table class="table">
             <?php
             $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
             $sql="select id,username,name,gender,email,image from user";
@@ -70,8 +41,10 @@ function showPopup() {
                     if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['5'])) {
                         echo "<td>";
                         echo "<button onclick=showPopup()>
-                        <i class='bi bi-receipt'></i></a>"
-                        ;
+                        <i class='bi bi-receipt'></i></a></td>";
+                        echo "<td>";
+                        echo "<button onclick=confirm()>
+                        confirm";
                     
             }}
         }
@@ -79,6 +52,8 @@ function showPopup() {
             ?>
             
         </table>
+            </div>
+        </div>
     </div>
 </body>
 
