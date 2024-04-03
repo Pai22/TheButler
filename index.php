@@ -35,30 +35,31 @@ if (!isset($_SESSION['id'])) {
                 <div class="container">
                     <div class="mt-3 d-flex justify-content-between">
                         <table class="table table-borderless  mt-4">
-                            <?php
-                            $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
-                            $sql = "SELECT t1.title,t1.id,t2.username,t1.post_date,t1.user_id,t1.content FROM community_admin as t1
-                                INNER JOIN user as t2 ON (t1.user_id = t2.id) ORDER BY t1.post_date DESC";
-
-                            $result = $conn->query($sql);
-                            while ($row = $result->fetch()) {
-                                echo "<tr><td>
+                            <form action="delete.php" method="post">
+                                <?php
+                                $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+                                $sql = "SELECT t1.title,t1.id,t2.username,t1.post_date,t1.user_id,t1.content FROM community_admin as t1
+                                INNER JOIN user as t2 ON (t1.user_id = t2.id)  ORDER BY t1.post_date DESC";
+                                $result = $conn->query($sql);
+                                while ($row = $result->fetch()) {
+                                    echo "<tr><td>
                                     <div class='card ' style=width: 10rem;>
                                         <div class='card-body'>
                                             <h4 class='card-text' style=color:blue;> $row[0]</h4>
                                             $row[5]<br>
                                             $row[2] - $row[3]</p>";
-                                if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
-                                    echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end '
+                                    if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
+                                        echo "<a href=delete.php?id=$row[1] class = 'btn btn-danger btn-sm mt-2 float-end '
                                             onclick = 'return myFunction()'><i class='bi bi-trash'></i> Delete</a>
                                          </div>
                                     </div>
                                     </td>";
-                                    echo "</tr>";
+                                        echo "</tr>";
+                                    }
                                 }
-                            }
-                            $conn = null;
-                            ?>
+                                $conn = null;
+                                ?>
+                            </form>
                         </table>
                     </div>
                 </div>
