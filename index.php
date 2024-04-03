@@ -38,7 +38,7 @@ if (!isset($_SESSION['id'])) {
                             <?php
                             $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
                             $sql = "SELECT t1.title,t1.id,t2.username,t1.post_date,t1.user_id,t1.content FROM community_admin as t1
-                                INNER JOIN user as t2 ON (t1.user_id = t2.id) ORDER BY t1.post_date DESC";
+                                    INNER JOIN user as t2 ON (t1.user_id = t2.id) order by t1.post_date DESC";
 
                             $result = $conn->query($sql);
                             while ($row = $result->fetch()) {
@@ -49,7 +49,7 @@ if (!isset($_SESSION['id'])) {
                                             $row[5]<br>
                                             $row[2] - $row[3]</p>";
                                 if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
-                                    echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end '
+                                    echo "<a href=delete.php?id=$row[1] class = 'btn btn-danger btn-sm mt-2 float-end '
                                             onclick = 'return myFunction()'><i class='bi bi-trash'></i> Delete</a>
                                          </div>
                                     </div>
