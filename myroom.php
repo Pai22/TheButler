@@ -68,7 +68,7 @@ if (!isset($_SESSION['id'])) {
                                     <?php ?>
                                     <input type="date" name="date" class="form-control" style="height:25px;width:200px;">
                                     <div class="mt-2">
-                                        <input type="time" name="time" class="form-control" style="height:25px;width:200px;">
+                                        <input type="time" name="time" class="form-control" style="height:25px;width:200px;">(เวลาทำการ 8.00-16.00)
                                     </div>
                                 </div>
                             </div>
