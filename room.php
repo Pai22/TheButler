@@ -30,30 +30,30 @@ if (isset($_GET['name'])) {
             <div class="card-body">
                 <h6 class="card-title color: black;"><i class="bi bi-building-fill"></i> Total Rooms</h6>
                 <table class="table">
-                    <?php
-                    $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
-                    $sql = "select id,number_room,username,name,gender,email,image,role from user";
-                    $result = $conn->query($sql);
-                    while ($row = $result->fetch()) {
-                        if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
-                            if($row[7]=='m'){
-                                echo "<tr><td><a href=bill.php? style = text-decoration:none>Room : $row[1]</a>";
-                                echo "<td>";
-                                if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['5'])) {
-                                    echo "<td>";
-                                    echo "<button onclick=showPopup()>
+            <?php
+            $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+            $sql="select id,number_room,username,name,gender,email,image,role from user";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch()) {
+                if(isset($_SESSION['id']) && ($_SESSION['role'] == 'a')){
+                    if($row[7]=='m'){
+                    echo "<tr><td><a href=bill.php? style = text-decoration:none>Room : $row[1]</a>";
+                    echo "<td>";
+                    if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['5'])) {
+                        echo "<td>";
+                        echo "<button onclick=showPopup()>
                         <i class='bi bi-receipt'></i></a></td>";
                                     echo "<td>";
                                     echo "<button onclick=confirm()>
                         confirm";
-                                }
-                            }
-                        }
+                 
                     }
-                    $conn = null;
-                    ?>
-
-                </table>
+            }}
+        }
+            $conn = null;
+            ?>
+            
+        </table>
             </div>
         </div>
     </div>
