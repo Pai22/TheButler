@@ -22,25 +22,26 @@
                         <div class="card-body">
                             <?php
                                 $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
-                                $sql="select username,user_id from user";
-                                $result = $conn->query($sql);
-                                $i=0;
-                                while ($row = $result->fetch()) {
-                                    $i+=1;
-                                    if(isset($_SESSION['id']) && ($_SESSION['role'] == 'a')){
-                                        if($row['user_id']== $i){
-                                            echo "<h4>Room : $row[0]</h4><br>";
+                                if(isset($_GET['room'])) {
+                                    // ดึงค่าหมายเลขห้องจาก URL
+                                    $number_room = $_GET['room'];
+                                    // สร้างคำสั่ง SQL เพื่อดึงข้อมูลของห้องที่เลือก
+                                    $sql = "SELECT * FROM user WHERE number_room = $number_room";
+                                    $result = $conn->query($sql);
+                                        // แสดงข้อมูลของห้องที่เลือก
+                                        while($row = $result->fetch()) {
+                                            echo "<h4>Room " . $row["number_room"] . "</h4>";
+                                            // แสดงข้อมูลอื่น ๆ ของห้องที่คุณต้องการ
                                         }
                                     }
-                                }
                             ?>
-
                             <h5 class="card-text">น้ำใช้ไป :</h5><input type= text id="num1" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
                             <h5 class="card-text">ไฟใช้ไป:</h5><input type= text id="num2" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
                             <h5 class="card-text">ค่าห้อง:</h5><input type= text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>
                             <button onclick="calculate()">คำนวณ</button><br>
                 
                             <form action="bill_save.php" method="post">
+                                <p id="number_room"><h5 class="card-text">ห้องหมายเลข :</h5><input type= text id="number_room" name="number_room" required class=form-control style="height:30px;width:100px"></p>
                                 <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text id="price" name="price" required class=form-control style="height:30px;width:100px" oninput="calculate(this)"></p>
                                 <button type="submit" class = 'btn btn-success mt-1'>บันทึก</button>
                             </form>
