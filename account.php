@@ -60,10 +60,7 @@ if (!isset($_SESSION['id'])) {
                     
                     while($row = $result->fetch()){                        
                             echo 
-                            "<img src=$row[0] >
-                            <br>
-                            <br>
-
+                            "
                             <label class = col-lg-3 col-form-label>Username :</label>
                             <div class=col-lg-9>
                             <input type= text name= username value= $row[1]  required class=form-control disabled>
