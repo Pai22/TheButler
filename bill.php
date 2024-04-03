@@ -28,7 +28,7 @@
                 <button onclick="calculate()">คำนวณ</button><br>
                 <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text name="sum" id ="sum" required class=form-control disabled style="height:30px;width:100px" oninput="calculate(this)"></p>
             </div>
-            <button type="button" class = 'btn btn-success mt-1'>confirm</button>
+            <button type="button" class = 'btn btn-success mt-1'>send</button>
             </div>
         </div>
         </div>
