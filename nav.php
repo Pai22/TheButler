@@ -36,7 +36,7 @@
 
           <?php } elseif (isset($_SESSION['id']) && $_SESSION['role'] == 's') { ?>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+              <a class="nav-link active" aria-current="page" href="service.php">
                 <i class="bi bi-building-fill-gear me-2"></i>
                 Service
               </a>

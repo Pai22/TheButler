@@ -7,6 +7,7 @@ if (!isset($_SESSION['id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,27 +16,28 @@ if (!isset($_SESSION['id'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>The Butler</title>
 </head>
+
 <body style="background-color:#000000;">
-<?php include "nav.php" ?>
+    <?php include "nav.php" ?>
     <div class="container">
-        <div class = "row mt-5">
+        <div class="row mt-5">
             <div class="col-lg-3 col-md-2 col-sm-1"></div>
             <div class="col-lg-6 col-md-8 col-sm-10">
                 <div class="card">
                     <div class="card-header text-white" style="background-color: #C6824B;">My Room</div>
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="myroomsave.php" method="post">
                             <div class="row">
                                 <label class="col-lg-3 col-form-label">No.room: 101</label>
                             </div>
                             <div class="row mt-3">
                                 <label class="col-lg-3 col-form-label">ค่าเช่า :</label>
-                                <input type= text name= username value= ""  required class=form-control disabled style="height:30px;width:100px">
+                                <input type=text name=username value="" required class=form-control disabled style="height:30px;width:100px">
                             </div>
                             <div class="row mt-3">
                                 <label class="col-lg-4 col-form-label">QR code:</label>
                                 <div class="col-lg-8">
-                                   <img src="qr.jpg" width="200" height="400">
+                                    <img src="qr.jpg" width="200" height="400">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -45,25 +47,35 @@ if (!isset($_SESSION['id'])) {
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <label class="col-lg-4 col-form-label">service:</label>
-                                <div class="col-lg-3 mt-2">
-                                    <select class="form-select form-select-sm" aria-label="Small select example" style="height:25px;width:100px;">
-                                        <option selected>-*.*-</option>
-                                        <option value="1">Maid</option>
-                                        <option value="2">Technician</option>
-                                    </select>
+                                <div>
+                                    <label class="col-lg-4">service: </label>
+                                    <span class=" dropdown ">
+                                        <select name="services" class="form-select">
+                                            <?php
+                                            $conn = new PDO("mysql:hostname=localhost;dbname=butler;charset=utf8", "root", "");
+                                            $sql = "SELECT * FROM services";
+                                            foreach ($conn->query($sql) as $row) {
+                                                echo "<option value = " . $row['id'] . "> " . $row['name'] . "</option>";
+                                                
+                                            }
+                                            $conn = null;
+
+                                            ?>
+                                        </select>
+                                    </span>
                                 </div>
                                 <div class="col-lg-5 mt-2">
-                                    <input type="date" name="#"  class="form-control" style="height:25px;width:200px;">
+                                    <?php ?>
+                                    <input type="date" name="date" class="form-control" style="height:25px;width:200px;">
                                     <div class="mt-2">
-                                    <input type="time" name="#" class="form-control" style="height:25px;width:200px;">
+                                        <input type="time" name="time" class="form-control" style="height:25px;width:200px;">
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-6" style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary btn-sm "><i class="bi bi-arrow-down-square-fill"></i>   Submit</button>
+                                    <button type="submit" class="btn btn-primary btn-sm "><i class="bi bi-arrow-down-square-fill"></i> Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -72,6 +84,7 @@ if (!isset($_SESSION['id'])) {
             </div>
             <div class="col-lg-3 col-md-2 col-sm-1"></div>
         </div>
-</div>
+    </div>
 </body>
+
 </html>
