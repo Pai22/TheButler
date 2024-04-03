@@ -14,53 +14,54 @@
 </head>
 
 <body style="background-color: black;">
-        <?php include "nav.php" ?>
+    <?php include "nav.php" ?>
         <div class="container mt-5">
-        <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card" style="height:520px;width:500px">
-            <div class="card-body">
-                <br>
-                <?php
-            $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
-            $sql="select username from user";
-            $result = $conn->query($sql);
-            $i=0;
-            while ($row = $result->fetch()) {
-                $i+=1;
-                if ($_SESSION['role'] == 'a') {
-                    echo "<tr><td>Room : $row[0]";
-                    echo "</td></tr>";}}?>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card" style="height:520px;width:500px">
+                        <div class="card-body">
+                            <?php
+                                $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+                                $sql="select username,user_id from user";
+                                $result = $conn->query($sql);
+                                $i=0;
+                                while ($row = $result->fetch()) {
+                                    $i+=1;
+                                    if(isset($_SESSION['id']) && ($_SESSION['role'] == 'a')){
+                                        if($row['user_id']== $i){
+                                            echo "<h4>Room : $row[0]</h4><br>";
+                                        }
+                                    }
+                                }
+                            ?>
 
-                <h5 class="card-text">น้ำใช้ไป :</h5><input type= text id="num1" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
-                <h5 class="card-text">ไฟใช้ไป:</h5><input type= text id="num2" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
-                <h5 class="card-text">ค่าห้อง:</h5><input type= text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>
-                <button onclick="calculate()">คำนวณ</button><br>
+                            <h5 class="card-text">น้ำใช้ไป :</h5><input type= text id="num1" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
+                            <h5 class="card-text">ไฟใช้ไป:</h5><input type= text id="num2" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
+                            <h5 class="card-text">ค่าห้อง:</h5><input type= text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>
+                            <button onclick="calculate()">คำนวณ</button><br>
                 
-            
-            <form action="bill_save.php" method="post">
-                <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text id="price" name="price" required class=form-control style="height:30px;width:100px" oninput="calculate(this)"></p>
-                <button type="submit" class = 'btn btn-success mt-1'>บันทึก</button>
-            </form>
-        </div>
+                            <form action="bill_save.php" method="post">
+                                <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text id="price" name="price" required class=form-control style="height:30px;width:100px" oninput="calculate(this)"></p>
+                                <button type="submit" class = 'btn btn-success mt-1'>บันทึก</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-        </div>
         <script>
-        function calculate(input) {
+            function calculate(input) {
             // รับค่าจากช่อง input
-            var num1 = document.getElementById("num1").value;
-            var num2 = document.getElementById("num2").value;
-            var num3 = document.getElementById("num3").value;
+                var num1 = document.getElementById("num1").value;
+                var num2 = document.getElementById("num2").value;
+                var num3 = document.getElementById("num3").value;
 
-            // ทำการคำนวณ
-            var price = (parseFloat(num1)*18) + (parseFloat(num2)*8) + (parseFloat(num3));
+                // ทำการคำนวณ
+                var price = (parseFloat(num1)*18) + (parseFloat(num2)*8) + (parseFloat(num3));
 
             // แสดงผลลัพธ์
-            document.getElementById("price").value = price;
-        }
-    </script>
-        
-</body>
+                document.getElementById("price").value = price;
+            }
+        </script>  
+    </body>
 </html>
