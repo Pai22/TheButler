@@ -27,53 +27,44 @@ if (!isset($_SESSION['id'])) {
     <?php include "nav.php" ?>
     <div class="container">
         <div class="row mt-5">
-            <div class="col-lg-2 col-md-1 col-sm-1"></div>
-            <div class="col-lg-8 col-md-10 col-sm-10">
-                <div class="container centered-box">
-                    <p><i class="bi bi-newspaper"></i> News</p>
-                    <div class="mt-3 d-flex justify-content-between">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <?php if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) { ?>
+                    <div><a href="newpost.php" class="btn btn-secondary "><i class="bi bi-plus"></i> News</a></div>
+                <?php } ?>
+                <div class="container "></div>
+                <div class="mt-3 d-flex justify-content-between">
+                    <table class="table table-borderless  mt-4">
+                        <?php
+                        $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+                        $sql = "SELECT t1.title,t1.id,t2.username,t1.post_date,t1.user_id FROM community_admin as t1
+                                INNER JOIN user as t2 ON (t1.user_id = t2.id) ORDER BY t1.post_date DESC";
 
-                        <table class="table table-borderless  mt-4">
-                            <?php
-                            $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-                            if (isset($_GET['catid'])) {
-                                $catid = $_GET['catid'];
-                                $sql = "SELECT t3.name,t1.title,t1.id,t2.login,t1.post_date,t1.user_id FROM post as t1
-                                INNER JOIN user as t2 ON (t1.user_id = t2.id)
-                                INNER JOIN category as t3 ON (t1.cat_id=t3.id) WHERE (t1.cat_id = $catid) ORDER BY t1.post_date DESC";
-                            } else {
-                                $sql = "SELECT t3.name,t1.title,t1.id,t2.login,t1.post_date,t1.user_id FROM post as t1
-                                INNER JOIN user as t2 ON (t1.user_id = t2.id)
-                                INNER JOIN category as t3 ON (t1.cat_id=t3.id) ORDER BY t1.post_date DESC";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch()) {
+                            echo "<tr><td>
+                                    <div class='card ' style=width: 10rem;>
+                                        <div class='card-body'>
+                                            <p class='card-text'><a href=post.php?id=$row[1] style = text-decoration:none>$row[0]</a><br>$row[2] - $row[3]</p>";
+                            if(isset($_SESSION['id']) && ($_SESSION['role']=='a' ) ){
+                            echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end me-3'
+                                            onclick = 'return myFunction()'><i class='bi bi-trash'></i> Delete</a>
+                                            
+                                         </div>
+                                    </div>
+                                
+                                    </td>";
+                            echo "</tr>";
                             }
-                            $result = $conn->query($sql);
-                            while ($row = $result->fetch()) {
-                                echo "<tr><td>[ $row[0] ] <a href=post.php?id=$row[2]
-                                style = text-decoration:none>$row[1]</a><br>$row[3] - $row[4]</td>";
-                                if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a' || $_SESSION['user_id'] == $row['5'])) {
-                                    echo "<td>";
-                                    echo "<a href=delete.php?id=$row[2] class = 'btn btn-danger btn-sm mt-2 float-end me-3'
-                                    onclick = 'return myFunction()'>
-                                    <i class='bi bi-trash'></i></a>";
-                                    if ($_SESSION['user_id'] == $row['5']) {
-                                        echo "<a href=editpost.php?id=$row[2]
-                                        class = 'btn btn-warning btn-sm mt-2 float-end me-2'>
-                                            <i class='bi bi-pencil-fill'></i></a>";
-                                    }
-                                    echo "</td>";
-                                } else {
-                                    echo "<td></td>";
-                                }
-                                echo "</tr>";
-                            }
-                            $conn = null;
-                            ?>
-                        </table>
-                    </div>
+                            
+                        }
+                        $conn = null;
+                        ?>
+                    </table>
                 </div>
 
-                <div class="col-lg-2 col-md-1 col-sm-1"></div>
             </div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
     </div>
 
