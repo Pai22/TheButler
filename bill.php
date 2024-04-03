@@ -20,16 +20,16 @@
         <div class="col-md-5">
             <div class="card" style="height:520px;width:500px">
             <div class="card-body">
-                <h4 class="card-text">ห้อง สมมติว่า101</h4>
                 <br>
                 <h5 class="card-text">น้ำใช้ไป :</h5><input type= text id="num1" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
                 <h5 class="card-text">ไฟใช้ไป:</h5><input type= text id="num2" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
                 <h5 class="card-text">ค่าห้อง:</h5><input type= text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>
                 <button onclick="calculate()">คำนวณ</button><br>
-                <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text name="price" id ="price" required class=form-control disabled style="height:30px;width:100px" oninput="calculate(this)"></p>
+                
             
             <form action="bill_save.php" method="post">
-            <button type="submit" class = 'btn btn-success mt-1'>บันทึก</button>
+                <p id="result"><h5 class="card-text">รวมทั้งหมด:</h5><input type= text id="price" name="price" required class=form-control disabled style="height:30px;width:100px" oninput="calculate(this)"></p>
+                <button type="submit" class = 'btn btn-success mt-1'>บันทึก</button>
             </form>
         </div>
             </div>
