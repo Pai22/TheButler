@@ -4,6 +4,7 @@ if (!isset($_SESSION['id'])) {
     header("location:login.php");
     die();
 }
+include_once 'dbConfig.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +19,7 @@ if (!isset($_SESSION['id'])) {
 </head>
 
 <body style="background-color:#000000;">
+
     <?php include "nav.php" ?>
     <div class="container">
         <div class="row mt-5">
@@ -26,26 +28,41 @@ if (!isset($_SESSION['id'])) {
                 <div class="card">
                     <div class="card-header text-white" style="background-color: #C6824B;">My Room</div>
                     <div class="card-body">
+                        <div class="row">
+                            <label class="col-lg-3 col-form-label">No.room: 101</label>
+                        </div>
+                        <div class="row mt-3">
+                            <label class="col-lg-3 col-form-label">ค่าเช่า :</label>
+                            <input type=text name=username value="" required class=form-control disabled style="height:30px;width:100px">
+                        </div>
+                        <div class="row mt-3">
+                            <label class="col-lg-4 col-form-label">QR code:</label>
+                            <div class="col-lg-8">
+                                <img src="qr.jpg" width="200" height="400">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <?php if (!empty($_SESSION['statusMsg'])) { ?>
+                                <div class="alert alert-success mt-3" role="alert">
+                                    <?php
+                                    echo $_SESSION['statusMsg'];
+                                    unset($_SESSION['statusMsg']);
+                                    ?>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <form action="image_bill.php" method="POST" enctype="multipart/form-data">
+                            <div class="text-center justify-content-center align-items-center p-4 border-2 border-dashed rounded-3">
+                                <h6 class="my-2">Select image file to upload</h6>
+                                <input type="file" name="file" class="form-control streched-link" accept="image/gif, image/jpeg, image/png">
+                                <p class="small mb-0 mt-2"><b>Note:</b> Only JPG, JPEG, PNG & GIF files are allowed to upload</p>
+                            </div>
+                            <div class="d-sm-flex justify-content-center mt-2">
+                                <input type="submit" name="submit" value="Upload" class="btn btn-sm btn-success mb-3">
+                            </div>
+                        </form>
+
                         <form action="myroomsave.php" method="post">
-                            <div class="row">
-                                <label class="col-lg-3 col-form-label">No.room: 101</label>
-                            </div>
-                            <div class="row mt-3">
-                                <label class="col-lg-3 col-form-label">ค่าเช่า :</label>
-                                <input type=text name=username value="" required class=form-control disabled style="height:30px;width:100px">
-                            </div>
-                            <div class="row mt-3">
-                                <label class="col-lg-4 col-form-label">QR code:</label>
-                                <div class="col-lg-8">
-                                    <img src="qr.jpg" width="200" height="400">
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <label for="file" class="col-lg-4 col-form-label">แนบหลักฐานการโอนเงิน:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" name="file " type="file" id="formFile">
-                                </div>
-                            </div>
                             <div class="row mt-3">
                                 <div>
                                     <label class="col-lg-4">service: </label>
@@ -56,7 +73,6 @@ if (!isset($_SESSION['id'])) {
                                             $sql = "SELECT * FROM services";
                                             foreach ($conn->query($sql) as $row) {
                                                 echo "<option value = " . $row['id'] . "> " . $row['name'] . "</option>";
-                                                
                                             }
                                             $conn = null;
 
@@ -75,7 +91,7 @@ if (!isset($_SESSION['id'])) {
                             <div class="row mt-3">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-6" style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary btn-sm "><i class="bi bi-arrow-down-square-fill"></i> Submit</button>
+                                    <button type="submit" class="btn btn-primary btn-sm " name="submit" value="Upload"><i class="bi bi-arrow-down-square-fill"></i> Submit</button>
                                 </div>
                             </div>
                         </form>
