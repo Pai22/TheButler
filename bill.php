@@ -50,10 +50,9 @@ if (!isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
                         <h5 class="card-text">ค่าห้อง:</h5><input type=text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>
                         <button onclick="calculate()">คำนวณ</button><br>
 
-                        <form action="bill_save.php" method="post">
-                            <p id="number_room">
-                            <h5 class="card-text">ห้องหมายเลข :</h5><input type=text id="number_room" 
-                            value="<?php echo $number_room ?>" name="number_room" required class=form-control style="height:30px;width:100px"></p>
+                            <form action="bill_save.php" method="post">
+                                <p id="number_room">
+                                <h5 class="card-text">ห้องหมายเลข :</h5><input type=text id="number_room" disabled value="<?php echo $number_room ?>" name="number_room" required class=form-control style="height:30px;width:100px"></p>
 
                         <?php 
                         } 
