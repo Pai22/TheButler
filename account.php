@@ -16,15 +16,15 @@ if (!isset($_SESSION['id'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     
     <title>Account</title>
-    <script>
-        function Edit_Function(id,username,password,name,gender,email,image){
+    <<script>
+        function Edit_Function(id,login,password,name,gender,email){
             //alert(id+login+gender+email+role+name);            
-            document.getElementById('image').value=image;
-            document.getElementById('username').value=username;
-            document.getElementById('name').value=name.replace(/###/g,' ');
+            document.getElementById('user_id').value=id;
+            document.getElementById('login').value=login;
+            document.getElementById('password').value=password;
+            document.getElementById('name').value=name;
             document.getElementById('gender').value=gender;
             document.getElementById('email').value=email;
-           
         }
     </script>
 </head>
@@ -46,33 +46,36 @@ if (!isset($_SESSION['id'])) {
                     while($row = $result->fetch()){  
                     if(isset($_SESSION['id']) && ($_SESSION['role'] == 'm')){
                         if($row[7]=='m'){
-
                             echo "<h4>Room " . $row["number_room"] . "</h4>
-                        
+                            
                             <label class = col-lg-3 col-form-label>Username :</label>
                             <div class=col-lg-9>
                             <input type= text name=username value= $row[1]  required class=form-control disabled>
                             </div><br>
-                            
+
                             <label class = col-lg-3 col-form-label>Password :</label>
-                              <div class=col-lg-9>
-                                <input type=password name=password required class=form-control>
-                              </div><br>
+                            <div class=col-lg-9>
+                            <input type= text name=password  required class=form-control disabled>
+                            </div><br>
 
-                              <label class = col-lg-3 col-form-label>Re-password :</label>
-                              <div class=col-lg-9>
-                                <input type=password name=password required class=form-control>
-                              </div><br>
+                            <label class = col-lg-3 col-form-label>Name - Sername :</label>
+                            <div class=col-lg-9>
+                                <input type=text name=name value= $row[2] required class=form-control disabled>
+                            </div><br>
 
-                              <label class = col-lg-3 col-form-label>Name - Sername :</label>
-                              <div class=col-lg-9>
-                                <input type=text name=name value= $row[2] required class=form-control>
-                              </div><br>
+                            <label class = col-lg-3 col-form-label>Gender :</label>
+                            <div class=col-lg-9>
+                                <input type=text name=gender value= $row[3] required class=form-control disabled>
+                            </div><br>
 
                             <label class = col-lg-3 col-form-label>Email :</label>
                               <div class=col-lg-9>
-                                <input type=text name=email value= $row[4] required class=form-control>
-                            </div><br>";
+                                <input type=text name=email value= $row[4] required class=form-control disabled>
+                            </div><br>
+
+                            <button type='button' onclick=Edit_Function($row[0],'$row[1]','','$row[2]','$row[3]','$row[4]')
+                            class='btn btn-warning btn-sm' data-bs-toggle='modal' 
+                            data-bs-target='#UserModal'><i class='bi bi-pencil-fill'>แก้ไขข้อมูลส่วนตัว</i></button>";
                     }
                 }
             }
@@ -80,16 +83,50 @@ if (!isset($_SESSION['id'])) {
                     ?>
                 </div>
                 <!-- Modal การแก้ไขข้อมูล -->
+                <form action="account_save.php" method="post">
+                    <input type="hidden" name="user_id" id="user_id">
+                    <div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">แก้ไขข้อมูลผู้ใช้</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">        
+                                    <div class="mb-2">
+                                        <label for="login" class="col-form-label">Username:</label>
+                                        <input type="text" class="form-control" id="login" name="login" disabled>
+                                    </div>   
+                                    <div class="mb-2">
+                                        <label for="password" class="col-form-label">Password:</label>
+                                        <input type="text" class="form-control" id="password" name="password">
+                                    </div>  
+                                    <div class="mb-2">
+                                        <label for="name" class="col-form-label">Name - Sername:</label>
+                                        <input type="text" class="form-control" id="name" name="name">
+                                    </div> 
+                                    <div class="mb-2">
+                                        <label for="gender" class="col-form-label">Gender:</label>
+                                        <select name="gender" id="gender" class="form-select" required>
+                                            <option value="m">Male</option>
+                                            <option value="f">Female</option>
+                                            <option value="o">Others</option>
+                                        </select>
+                                    </div> 
+                                    <div class="mb-2">
+                                        <label for="email" class="col-form-label">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div> 
+                                       
+                                </div>
                                 <div class="modal-footer">
-                                <form action="account_save.php" method="post">
                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
-                                </form></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </form>
-    
+                </form> 
 </body>
 
 </html>
