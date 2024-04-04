@@ -21,7 +21,6 @@ if (!isset($_SESSION['id'])) {
             //alert(id+login+gender+email+role+name);            
             document.getElementById('image').value=image;
             document.getElementById('username').value=username;
-            
             document.getElementById('name').value=name.replace(/###/g,' ');
             document.getElementById('gender').value=gender;
             document.getElementById('email').value=email;
@@ -36,44 +35,33 @@ if (!isset($_SESSION['id'])) {
         <div class = "row mt-4">
             <div class="col-lg-3 col-md-2 col-sm-1"></div>
             <div class="col-lg-6 col-md-8 col-sm-10">
-            <?php
-
-                    if(isset($_SESSION['editaccount'])){
-						if($_SESSION['editaccount']==0){
-							echo "<div class='alert alert-danger'>
-							การแก้ไขข้อมูลผู้ใช้งานมีปัญหา</div>";
-						}else{
-							echo "<div class='alert alert-success'>
-							แก้ไขข้อมูลผู้ใช้งานเรียบร้อยแล้ว</div>";
-						}
-						unset($_SESSION['editaccount']);
-					}
-
-				?>
                 <div class="card">
                     <div class="card-header text-white fs-5" style="background-color:#C6824B"><i class="bi bi-person-circle text-black" style="font-size:25px"></i> My Account</div>
                     <div class="card-body">
                     <?php 
                     $conn=new PDO("mysql:host=localhost;dbname=butler;charset=utf8","root","");
-                    $sql="select id,username,name,gender,email,image from user";
+                    $username = $_SESSION['username'];
+                    $sql="select id,username,name,gender,email,image,number_room,role from user where number_room = $username";
                     $result=$conn->query($sql);
-                    
-                    while($row = $result->fetch()){                        
-                            echo 
-                            "
+                    while($row = $result->fetch()){  
+                    if(isset($_SESSION['id']) && ($_SESSION['role'] == 'm')){
+                        if($row[7]=='m'){
+
+                            echo "<h4>Room " . $row["number_room"] . "</h4>
+                        
                             <label class = col-lg-3 col-form-label>Username :</label>
                             <div class=col-lg-9>
-                            <input type= text name= username value= $row[1]  required class=form-control disabled>
+                            <input type= text name=username value= $row[1]  required class=form-control disabled>
                             </div><br>
                             
                             <label class = col-lg-3 col-form-label>Password :</label>
                               <div class=col-lg-9>
-                                <input type=password name=pwd required class=form-control>
+                                <input type=password name=password required class=form-control>
                               </div><br>
 
                               <label class = col-lg-3 col-form-label>Re-password :</label>
                               <div class=col-lg-9>
-                                <input type=password name=pwd required class=form-control>
+                                <input type=password name=password required class=form-control>
                               </div><br>
 
                               <label class = col-lg-3 col-form-label>Name - Sername :</label>
@@ -86,14 +74,17 @@ if (!isset($_SESSION['id'])) {
                                 <input type=text name=email value= $row[4] required class=form-control>
                             </div><br>";
                     }
+                }
+            }
                     $conn=null;
                     ?>
                 </div>
                 <!-- Modal การแก้ไขข้อมูล -->
                                 <div class="modal-footer">
+                                <form action="account_save.php" method="post">
                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
-                                </div>
+                                </form></div>
                             </div>
                         </div>
                     </div>
