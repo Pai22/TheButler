@@ -52,7 +52,7 @@ if (!isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
 
                             <form action="bill_save.php" method="post">
                                 <p id="number_room">
-                                <h5 class="card-text">ห้องหมายเลข :</h5><input type=text id="number_room" disabled value="<?php echo $number_room ?>" name="number_room" required class=form-control style="height:30px;width:100px"></p>
+                                <h5 class="card-text">ห้องหมายเลข :</h5><input type=text id="number_room" value="<?php echo $number_room ?>" name="number_room" required class=form-control style="height:30px;width:100px"></p>
 
                         <?php 
                         } 
