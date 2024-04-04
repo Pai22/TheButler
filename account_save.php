@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    $user_id = $_POST['user_id'];
+    $user_id = $_SESSION['user_id'];
     $password = $_POST['password'];
     $name = $_POST['name'];
     $gender = $_POST['gender'];
