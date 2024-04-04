@@ -25,6 +25,7 @@ if(isset($_SESSION['id'])){
         $_SESSION['username'] = $data['username'];
         $_SESSION['role'] = $data['role'];
         $_SESSION['user_id'] = $data['id'];
+        $_SESSION['room'] = $data['number_room'];
         $_SESSION['id'] = session_id();
         header("location:index.php");
         die();

@@ -1,5 +1,10 @@
+<?php
+session_start();
+include_once 'dbConfig.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +12,36 @@
     <style>
         /* ปรับขนาดรูปภาพให้พอดีกับหน้าต่าง pop-up */
         img {
-            max-width: 60%;
-            max-height: 60%;
+            max-width: 90%;
+            max-height: 90%;
             display: block;
             margin: auto;
         }
     </style>
 </head>
+
 <body>
     <?php
-    // ตัวอย่างรูปภาพที่จะแสดงใน pop-up
-    $imagePath = "qr.jpg";
+    $room = $_GET['room'];
+    $query = $db->query("SELECT * FROM images_bill ORDER BY uploadde_on DESC");
+    $query1 = $db->query("SELECT * FROM user ");
+    $row1 = $query1->fetch_assoc();
+    if ($query->num_rows > 0) {
+        while ($row = $query->fetch_assoc()) {
+            while($row1 = $query1->fetch_assoc()){
+                if($row1['number_room'] == $room){
+                    $imageURL = 'uploads/' . $row['file_name'];
     ?>
-    <!-- แสดงรูปภาพ -->
-    <img src="<?php echo $imagePath; ?>" alt="รูปภาพ">
+                    <img src="<?php echo $imageURL ?>" alt="" >
+
+    <?php
+
+                }
+            }
+        }
+    }
+         else { ?>
+        <p>No image found...</p>
+    <?php } ?>
 </body>
 </html>

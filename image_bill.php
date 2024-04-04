@@ -5,6 +5,7 @@ include_once 'dbConfig.php';
 
 // File upload path
 $targetDir = "uploads/";
+$user_id = $_SESSION['user_id'];
 
 if (isset($_POST['submit'])) {
   if (!empty($_FILES["file"]["name"])) {
@@ -16,7 +17,7 @@ if (isset($_POST['submit'])) {
     $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
     if (in_array($fileType, $allowTypes)) {
       if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
-        $insert = $db->query("INSERT INTO images_bill(file_name, uploadde_on) VALUES ('" . $fileName . "', NOW())");
+        $insert = $db->query("INSERT INTO images_bill(file_name, uploadde_on, user_id) VALUES ('" . $fileName . "', NOW(),'$user_id') ");
         if ($insert) {
           $_SESSION['statusMsg'] = "The file <b>" . $fileName . "</b> has been uploaded successfully.";
           header("location:myroom.php");

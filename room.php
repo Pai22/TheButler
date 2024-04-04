@@ -18,7 +18,7 @@ if (isset($_GET['name'])) {
     <script>
 function showPopup() {
   // เปิดหน้าต่าง pop-up ด้วยความกว้าง 500px และความสูง 500px
-  window.open('popup_image.php', 'popup', 'width=500,height=500');
+  window.open('popup_image.php?room=<?php $room ?>', 'popup', 'width=500,height=500');
 }
 </script>
 </head>
@@ -35,10 +35,12 @@ function showPopup() {
             $sql="select id,username,name,gender,email,number_room,image,role from user";
             $result = $conn->query($sql);
             $i=0;
+            $room = "";
             while ($row = $result->fetch()) {
                 $i+=1;
                 if(isset($_SESSION['id']) && ($_SESSION['role'] == 'a')){
                     if($row[7]=='m'){
+                        $room = $row["number_room"];
                     echo "<tr><td><a href='bill.php?room=" . $row["number_room"] . "'style = text-decoration:none>Room " . $row["number_room"] . "</a><br>";
                     echo "<td>";
                 
