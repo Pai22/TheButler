@@ -1,9 +1,4 @@
 <?php session_start();
-if (isset($_GET['name'])) {
-    $catname = $_GET['name'];
-} else {
-    $catname = '--ทั้งหมด--';
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +11,14 @@ if (isset($_GET['name'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script>
-        function showPopup() {
+        function showPopup(room) {
             // เปิดหน้าต่าง pop-up ด้วยความกว้าง 500px และความสูง 500px
-            window.open('popup_image.php', 'popup', 'width=500,height=500');
+            window.open(`popup_image.php?room=${room}`, 'popup', 'width=500,height=500');
+        }
+
+        function myFunction() {
+            let r = confirm("ต้องการจะลบจริงหรือไม่");
+            return r;
         }
     </script>
 </head>
@@ -46,11 +46,11 @@ if (isset($_GET['name'])) {
 
                                 if (isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
                                     echo "<td>";
-                                    echo "<button onclick=showPopup()>
+                                    echo "<button onclick=showPopup(" . $room . ")>
                         <i class='bi bi-receipt'></i></a></td>";
                                     echo "<td>";
-                                    echo "<button onclick=confirm()>
-                        confirm";
+                                    echo "<a href=confirm_bill.php?id=$row[0] class = 'btn btn-outline-secondary  '
+                                            onclick = 'return myFunction()'> Confirm</a>";
                                 }
                             }
                         }
@@ -58,7 +58,7 @@ if (isset($_GET['name'])) {
                     $conn = null;
 
                     ?>
-                    
+
                 </table>
             </div>
         </div>

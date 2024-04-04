@@ -29,7 +29,7 @@ include_once 'dbConfig.php';
                     <div class="card-header text-white" style="background-color: #C6824B;">My Room</div>
                     <div class="card-body">
                         <div class="row">
-                            <label class="col-lg-3 col-form-label">No.room: <?php echo $_SESSION['room']; ?> </label>
+                            <label class="col-lg-3 col-form-label" name = "room">No.room: <?php echo $_SESSION['room']; ?> </label>
                         </div>
                         <div class="row mt-3">
                             <?php

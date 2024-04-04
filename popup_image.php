@@ -22,21 +22,27 @@ include_once 'dbConfig.php';
 
 <body>
     <?php
-    $query = $db->query("SELECT * FROM images_bill ORDER BY uploadde_on DESC");
-    $query1 = $db->query("SELECT * FROM user ");
-    $row1 = $query1->fetch_assoc();
+    $room = $_GET['room'];
+    $sql = "SELECT t1.file_name,t1.uploadde_on,t1.user_id,t2.id,t2.number_room FROM images_bill as t1
+            INNER JOIN user as t2 ON (t1.user_id=t2.id) ";
+    $query = $db->query($sql);
+
     if ($query->num_rows > 0) {
         while ($row = $query->fetch_assoc()) {
-            $imageURL = 'uploads/' . $row['file_name'];
+            if ($row['number_room'] == $room && $row['file_name'] != "") {
+                $imageURL = 'uploads/' . $row['file_name'];
     ?>
-            <img src="<?php echo $imageURL ?>" alt="" >
-
+                <img src="<?php echo $imageURL ?>" alt="">
     <?php
-
-                }
             }
-         else { ?>
-        <p>No image found...</p>
-    <?php } ?>
+        }
+    }
+
+    ?>
+    
+   
+    
+
 </body>
+
 </html>

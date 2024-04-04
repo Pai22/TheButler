@@ -7,6 +7,7 @@ include_once 'dbConfig.php';
 $targetDir = "uploads/";
 $user_id = $_SESSION['user_id'];
 
+
 if (isset($_POST['submit'])) {
   if (!empty($_FILES["file"]["name"])) {
     $fileName = basename($_FILES["file"]["name"]);

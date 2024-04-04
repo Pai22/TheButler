@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2024 at 09:47 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Apr 04, 2024 at 10:58 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,19 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `butler`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bill`
---
-
-CREATE TABLE `bill` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `month` char(100) NOT NULL,
-  `image_bill` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -53,21 +40,29 @@ CREATE TABLE `community_admin` (
 --
 
 INSERT INTO `community_admin` (`id`, `title`, `content`, `post_date`, `user_id`) VALUES
-(1, 'ประกาศด่วน', 'น้ำจะไม่ไหลทั้งวัน 1 เมษายน 2567 ขออภัยล่วงหน้า', '2024-04-02 09:46:20', 0);
+(1, 'ประกาศด่วน', 'น้ำจะไม่ไหลทั้งวัน 1 เมษายน 2567 ขออภัยล่วงหน้า', '2024-04-02 09:46:20', 11);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `myroom`
+-- Table structure for table `images_bill`
 --
 
-CREATE TABLE `myroom` (
-  `user_id` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `image_bill` blob NOT NULL,
-  `datetime` datetime DEFAULT NULL,
-  `service` char(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `images_bill` (
+  `id` int(11) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `uploadde_on` datetime NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `images_bill`
+--
+
+INSERT INTO `images_bill` (`id`, `file_name`, `uploadde_on`, `user_id`) VALUES
+(14, '22.jpg', '2024-04-05 02:43:04', 10),
+(15, '33.jpg', '2024-04-05 02:43:52', 9),
+(17, '48625E38-B816-466E-86F6-8F9C920DD921.jpg', '2024-04-05 03:57:43', 1);
 
 -- --------------------------------------------------------
 
@@ -77,9 +72,60 @@ CREATE TABLE `myroom` (
 
 CREATE TABLE `room_admin` (
   `id` int(11) NOT NULL,
-  `price` int(32) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_number_room` int(11) NOT NULL,
+  `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `room_admin`
+--
+
+INSERT INTO `room_admin` (`id`, `user_number_room`, `price`) VALUES
+(2, 109, 4086),
+(3, 110, 4052),
+(4, 105, 4128),
+(6, 104, 4280),
+(7, 105, 4506);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `name` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `name`) VALUES
+(1, 'maid'),
+(2, 'technician');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `showservices`
+--
+
+CREATE TABLE `showservices` (
+  `id` int(11) NOT NULL,
+  `date_service` text NOT NULL,
+  `time_service` time DEFAULT NULL,
+  `service_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `showservices`
+--
+
+INSERT INTO `showservices` (`id`, `date_service`, `time_service`, `service_id`, `user_id`) VALUES
+(10, '2024-04-23', '15:55:00', 2, 9);
 
 -- --------------------------------------------------------
 
@@ -89,13 +135,12 @@ CREATE TABLE `room_admin` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `number_room` varchar(100) NOT NULL,
+  `number_room` int(100) NOT NULL,
   `username` varchar(32) NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `gender` char(10) NOT NULL,
   `email` char(32) NOT NULL,
-  `image` blob DEFAULT NULL,
   `role` char(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -103,29 +148,23 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `number_room`, `username`, `password`, `name`, `gender`, `email`, `image`, `role`) VALUES
-(1, '101', '101', '72874ab88a6cbb83d51db4e121a89f3e217d103f', 'red', 'f', 'xxxx@gmail.com', 0xffd8ffe000104a46494600010100000100010000ffdb0043000a07070807060a0808080b0a0a0b0e18100e0d0d0e1d15161118231f2524221f2221262b372f26293429212230413134393b3e3e3e252e4449433c48373d3e3bffdb0043010a0b0b0e0d0e1c10101c3b2822283b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3bffc000110800d1009703012200021101031101ffc4001c0000010501010100000000000000000000060002030405070108ffc4003c10000201030301070204020a0105000000010203000411051221310613224151617132811423429152a11524333443627273b1c1e107163592d1ffc4001a010002030101000000000000000000000003040102050006ffc400251100030002020201050101010000000000000102031112210431410513142251326134ffda000c03010002110311003f0017ed076445bdbbdcd8333ac632f19ea0508f5e95d85a113ee848e244653fb5722b88fb9b89623d51c8ad7f3b1cc69a323e999eb2e3fdbe0f0fd3510386a9474a8987359a6a9296e01a63726929e306bc20839f2ae470e4420fcd588edddb93c0a74117803b0e4f415600268b3251ec8d6dd479e69c2dd33d29e07ad3838144e3247646d661c780e1bd0d556478242b22ed357fbcc79d3d8c775098e4033e47cea1c26776500e7caacda5a497528451f27d2a930686528c7915a9a45dae4a6407a5ea9cf431831abb49841651269f18487af9b799abb1dc6e3cf3f359c93022a4593d2926def67a289995a46bc730c75a97703d2b2925c0156a29b2473579b25cf45e6db2c7b268d655f4719a5512be78a545fb8c59e14dfa34a01bf538d7c8649ae4faec0d6badde44e3044a4d758b585a6d406d38c2eecfa5728ed0c92c9afdeb4c72fde906b6fce6b5a3c37d215286b5d1414fad78e335e66bd278ac837060c8ab16a9df4a01e8393501ab56436a31f3352bd9c5a66e78ab5a5c22e2f9226fd59c5525cb301eb56ed26fc25fa4846446e32688ef45a236c6dfc26daf248fa006aa6e39a24ed359022df5088131cc3071e543c61647d8ca413d0572ae8b64c4d5743376457aac41cd3306bdaee40b5a15f28748e51e98354d2478640f1b61879d68b2efb461e9d2b37154aed965b5da34e2d7240a04b1f3eab572df588243b4c855bd1b8a1fdbcd2db427098ccf959106905c86039cfbf955c5980e4114071bcb1f31caebf0d56e2d4af5071303f2b43789fc0e479e97fa41cc77040ce695072eb57e063bc4ff00eb4aa3ed585fcec6757d3180b97191c4601ae69db7b336dda8b8da3025c38fbd15f673500e5980daacde104e7028a2fbb21a5ebb27e26f51dd91360c1c7bd6af90fee6466078d87f1fc7993884769713ab343049285ea5149c543c8eb5f45e8fa3e99a55a9b6d3e18c27f8871927e735c4fb49a7bc5ae5ebadb3241df36d6d842e33eb40a85a2c9b6cc039356adf2231f34bba03feabd1e1db91c6450bd165db3574ad2e5d4a43145e16041c9e98a2d8bb130407bf966efc606148c006a6d3962b6b68e2b3b1c86601d89c6323afc512d940d7360048f939c0aa6db669e38999db29c7a7d9ea1a62585c18f6af40840c63e6adc5d98d222d9fd583b4790ae4f34c8b45b692e51ee6dc3bc5c2374ff8ad9550a0051803ca888eb7b38d76af491a476827b751889cef4f8358c50d748ffd46d316e6d52fa307bc8701b8ea280625dec015ea2b9b15c98bbd91c43c04566b0c311ef5ad1a6011e86b2ee062761ee6bb601ad0caf69b9af735054757a0d3734b352412826953436452ab1c74ad3f46834f4545ba7924231bb6614513d9eaa2d3bb8e5937e3ab138a1b9a5d3c4a43e59b3c8690f1fce95ecfa5c166648e26ef4f0a46707ee4d526be4d5bc50a74c22d4fb416fb1e0b3b8085b04b9e84fa551ba8a6bdd3a586792191654380326b0349b88ae142c92a99958e1241e123e6aeea774b656126d458e6986d8c21ddf7abedb7a07538e63a00058c9de6d3845524547736a618b7efdff02b5d564fd612423cd7c26bc92d96688c78233ea68ef17466f2d3d87da39eff0046b665c10631ff0015b50de5b2db24425daca70db46483ef423d89be29a6b594e72f03607baf956aff0048c16f7ad1c56e646182c47bd25dcbd33671afb93d04504a5e205b1f22a5f3acab7d41a523f21e351e6d5a0278f19240fbd5d32af1b5d14f5bb4179a74f11e72878ae42e92d93b1641904a806baddeeaf6f12952e3918eb421ace8ba8eb8a9fd1f64700e77b0db9a9e355e89b87c3b04223ebd4f5ac9ba399dcff98d156a5d99d5341b41777b1284e9956ce0fbd08c84b396f539a9a973eccdbdfc8da59a548026aa0cf69669723caa54b49e5fa50d712936789d2954e34ebd09b85b395071914aada27851d30b4ce41596150dc78b3c7f2a1fed16aaed78b60678e448803f97c0cd0d4b79349cc977213e786aadb86ecaf27d49e6a671683e4f2f92d2414dba2a20931b9ba83e42a491a59db74ac5db18cfa50ddbdddcc230933051d055c8efef2420248c4fa051cd391313ec52af259ae223c1233f6a70b7623953ed57747d0eeee077fa8c8c919fa6353827e6b79746b428446a51bc8939ab3b93962a681cb38cdadc8994ed38c1f7addb1fc25d5c331c090f5c1c738aceb8b530dc18e41b8a9eb4d0854968fc0e470c3ca85930abed07c3e4d62e985ed2dbdadae5a40aa07463586da8de6b172d6ba5aef1faa43c2a8ac0bb8350ba9a18bbc91c640724f049a36b1b38f4fb38ed635036819c0fa8f9fcd531f8cf7d82f33eaf1e3afd16e98fd3b40b3b3c493b0b9b8f376e80fb0ad7db8ffc5670ef57c5b580f706aedb4c254f2047514df098f407c3faad7937c32ce9916a3a7c7aa69f358cdf44cb8c9f235c4b5decfdce85a93d94de3dbcab81c30f6aef1e7587dacecfaeb7a7f79128fc4c1e2538fa87a50ee5574cd2cb1bece1db0ab8cfad695bdba4832066ae5c69463243a1523a823a5430a35b3ff121f4a4de3a962aba63d2c94b0f08c0ad1b789448b84e3cf150c6e18e474f5ad0877288f6ae03f9b79d575b1dc52bd935c3fe5c4b1c26403390a39a55edb5c4964f2dcc1f99ce190b739e9c71d2951548c3c9206ac233c0fd85588acf79e17ee6ac85441e429f13492b6c81727d6aaf27f0cd9c3fd3d8ac23182ec00f3ad6d3cdac526228da53fe55cd3ac74079487ba6cfb511dad8436b181128071e554edf633292f81b693dcccde381a241d3775ad388e31cd4415b1d0fc9a6199636393d3935cb65f5b21d5115a55939c91835484793ed506afab6c8c94e5dcf8467a0151d96af0cc7bbb8c42fea4f84fdeb5b0e1b78f66379372b268dcd22c84f7f120c8c65bf6a2b8e482dff002a14ef241f505193f7342fa5cbdddfe61604b42c320fc511c7e18828e01ebef59de53a75c77a1ac7e2637ab7d963f1720ff09c8f40c0d31a7b7937291dd4c7a0618cfdea3cfb0fdaa0bd2a21556203330da0f97bd2f8e5a6926391e34724d22c027d306a4563eb8354927766ce455947c9cd6a6866e1a3275bd1527dd7502296ff00123c751ea28724d12cae17fb10b9f34e28f948cf4acabdb15b7984b1a80921e7d8d76ffa66e7c6d7680f5ec7598c95b89d49e806302aa5f69b73a646bfd4bf1d0a1c871210cbf6a33eef2318af0c7b79079a1384c5e72d00516bf6c8a5468f0839e79c9fbd2a2abed06c6fdf7bc3b24fe38f826950f8d04e49fb01ad74c96739938144167656f6ca3a6698278d7c2a8e0f4c6ca7399b202dbb7fa9b8140e0d0f268d04b8441c118ab56d224bf96e7bb77e6393ad63c2b227e6dcc42441fa14d14dadc422048d23450a38c0e955de826bae816bab1d52c350ef2e6edcda67225c9c7c114dd5b5bb3bc5eee07922723893c9be68d248e1bc81a29543c6fc3035cd75ab0934cba6b7901fabf2cf91145c6b7481dd350c89e7695877a412381ee053782a49e9506f25b83903a54859a40234fa98e07c9af4f89a8c6798c9bbb0d3b0da7bf7335f3e76b9d91827a7ad18741c551d2ad458e9b6f6abd51067e7ceae6ee2bcd67b5795b47a4c11c6123d07c592781d6b0a3bb37b7724ff00500c55479002b47559cdbe9371227d454a8c7bd0fe8f77ddc7874053cc8e08f9153821becd5f1665a6fe4de8a475c6028f9ab28f2e79618f6aab188e75cc4cafec0f35222153d0d38cb57fd2ea393e753322cd118dc6437f2aa91863c806a756c75aab42592368cc78de291a37e4aff3a5b6af5ec4248c4ca3c4bd7e2a97c554c6c90e686ec1e94a9f4ab81196f1c18cb2a0aa934d0a9db181cd09da5c768b5a976dbaaa27f19e00a27b0ecb48987d42ede66fe156c2d5271550c5f958b1fb21966f1848e4557f4278ab10cccd18ddc30eb5ad6ba7dbdab831c31ae7cf193fb9a8ff00a1e4795e479d4063f343c9e2bd741307d4b1b7aaf455b6bdeee50a49c1ab9aa6996dae59774e007032ac3a8348e831142df886327e938c0a82de792ddcc72020a9c114178ef17ec3319b1791b9801350d22fb4a98a5cc4c541f0ba8c8615268512dd6b7691e09c3ef20fb574959126182aac3d08cd55934fb58afa19e1b78d1f9dcc8a075a7179cfede85bf013be46944de1cd3f766a3078a729c1cd676cd2e3f08ced6d6e6e5adecad5b6b48c0b37a0acad48c3a05c5bb5d319629f8675e307d6b4630cda835eca546f6d9182dc800f97ad6376de417105ba281b5246f23906b5bc7875a910bf33ec64da082dde231896d9430238706ac77f379371ee284fb3524f0e9d25c432e3bb97698db95228962bd86e36c6d98643fa58707e0d12e1c3d33671659cf0ae4b91c8edf531a9d6aa6d9a3f16ddebea87353452876c6450995a45a56f23d08c551923eea565f21c8f8ab64f41e86aa6b333c1047323a4609daeedfa463c85468cdf2b1ee7688e59a3b75ccac173d075269553b4bb9b24d8593dcb11937371e007e2955b8b32393fe1e5bd9c50461238b81e7eb56a207cc1ac3ffddba421c8b927d3086b5f4dd52cf5488c969307d9f50c608fb51f9cfa4c42f1dbeda2da8c53b781e55e6734e03150c0eb478172771359fab5b1282e53aaf0e3dbd6b44119af4ed2a558065239154b954b433e3e578ad52306dee587b56942c58024d0bc7abda49732c25fb9911c801f807ef5b7637c047b1c86cf420d63e4c758dfa3d6e3c9396534cd4dd505eb3989618f3ba538e0e081eb5eb4cab1973d0726b1c5d7f49dc4c51da3030b1903a8f3c57634e9f45725f09ffa68c7a485454fc407da3c25b9c0ce6b07b5253bb98490aa4c8e087073918a208bbdb28daeae2231db2a905339279eb583da4d5e1bdb58e182db0b28c1761cf15b7e2b734b679cf2279b6f7d834b2cb12111cae8186080700fda88f42d54ac2b0dc80f1671b8f253ff00142d29da8833d4e2a6b4b9eeaee2dacdb5dc23107a66b4bca84e7617e97e4bc39b8d7a674f80ac477ac995238c1e2ad235bdda061863e7e46b262d327b40105d19226fd2538fdead8b59936edba542391e1e0ff3ac63d554cbed32faac6bc64fde94f025cc22275dca4823e453496641bd76b0ebef5ec2e4a956e0835513c92dcb4566b5bc0e14678f3eaa7ed4aada8753e19011e8c33834aa3b30e9b97a385c91496f33c532ec6427eaff008ab1a56aefa36a51dddbcbbf3fdaa0e8451876bbb38b79035d451fe68fac0e370f5f9a0016a91923d0e0e7ca85925c56d07c76b2cf6768b1bdb7d46d23bab770d1c833f07d2ac62b9a76435c934abd16b3126da73838e7637ad74bf2e3a5358ef923373e1e15a3cf3a5804819f3a47f6a677814f23ef4514f4ce5dacdb775abdd44ca38909fb557b5d4af34e3fd5ee182ff0b788511f6dad113508ae5171df210df22849c73c534f1ce484da18c59aa1feacdbb5ed05eea3a95b5adccc2381db0420c795155a5c244d3c91eec2aed00ae40f7f6ae730bf717514c3fc370df35d32c2e3f245c4016549c6e607a7bff2aceac7315e8d0599e45fb32eda8d43518562bb5db6c412ca40cb554ed3d8c69a430b78c2f7400038fbd6cadc97018a6c2172b8c138f4a19d6e733452ec85fc230573c2927ad131d3e6b60752a5af902e65dd0903a8e95496531e4f983fb569364b36473935a9a2f676cee2d935360d3b0620424f84b67cfda98faa7953e3e2e6c1f870f264d20db43bc3aae8d6930272506589c00475abaf048ade2eecc521e40fff00687b56d6e1ecdd841036d7ba988ca47c08d7d855bd1fb516170a145dab06eb1ca7047ef5e671791e5e79e733a47a854b5adad9b4cec8eaac3c0c71d69e30934873c103affd531fb99a60f1bee41c8c118af166b517221efa33337452d935ab8dd54ee97656ae52db64d1e4a3b302379cf3d452a763f7f7a5443172dc3b6ca3246b2c6518641f5a06d5bb1a66bc696193bb0c795db9147c40f9a85b893da8952ad6989e3c8f1b04b44ec67e0e75b899d9dc74247028bd46001e95ee723a714b19ae8852b488cb91e47b635b9e298ebc75a7e31e75e32f157d8bb9d831daf84b698b291fd8be49f63415b148c815d3b518126b392394655b0315cd668cdbdc4b0b70636c53983227fab27ed398e455950019240c515f636e9aeadc59f784adbb64a15e0a9a0e99cbb919e33d2b4340d43fa275459dd885752b8068599f2da41f124b5c8e9d25dc31488e9144f1e00620e0b1f6f7aaf70f1ac2ea9088e2627c5b72cbc558b4962b88233f8659a4c8202f0013fa85437886ee121098e490103193820f98a4bbdf432e627b39edd2886e6589cb649255b1f50a9f4ed4eef4b52b67384563b8aba8619ab3a969f7924ab1dd311dda1c48c3dfa1ac462d13ec94156f71d69f4f1e78e1956c4e9563adc32d5e4f2dedcb5cddca2691fab11e5506d8d8f200c74cd31d8e3c1cfbd44c247c28f11cf3ed4c4c444f195d03e74dedbecbe2e6744c477322e38c2b9c5117616de49f5696e9d99c45111b9b9e49a154411a9c1e6897b117862d42588ce2389e3cb0271961e743cd3fa3d22cb2537db3a16e3e58a55893ebf1236cb5018af5773814ab3b88eac74d1aaa7774a648a7ae2a78e3d83a57ac9bc7353bd0bf1d94d1f07069f9c536488a9c8f2aad7f705214850e2498fec0573a496c9c78ddd712cb3a264bba01f3513dc4400612211feaacc1085059b249a4224c670297fc8d31ff00c04fe4b37772b244638c8627a9141fda6b22196f51387f0c9ec7d6898a95042ad50d47f3acda261c37045567c8e39398cfe1cfdae00094e7711e74f68b38c743d6addcdb35bc85181c7507150282b91d456d471a9daf930ad5456abe026ec86b4dde2e9b215dc09085bf87ae28de7962780db46ae923e3007191ec6b8fc4f24132dc46c55a26dc306baa68facc771648f1a190baae01e793d6b3f34b97b4358da7d332b50b7bafc4b25dbb88ca928dd491e86b0753b388d999e557590901079628c6fefa286e98c8899030181e171ebed4377b7b1c92462311bacac0091ba83d32054737a54594a7d0272c2f6c7a9d99a4b2f383451add9c3159ab4a0bbe39da0727d6859ed5d46e8c363f85c60d3319f7d80c9896fa2643b9bdaa6d246ed62dd47197c1e702a8249c1e7047183c55ad2d641a9db14049120247b531591b900a78f674686d551164608c070470d9e3da95789223aaec8252c072a0e467e29520d7f42736c24e0f435e74359d67a935d233259cbe1e094f10a99352b759364d2344c7a2cabb685b4683f13227ad169d1587bd666a56724aa8d1462468f395ce0e2b554a48328cac3fcad9a4f0e47983f151bda2a95e3ade8c081d4e6394146f4718af66d80f879f8ada68d58624456f915525d36d24ce37c6dfe43c7ec69778c767c996fb4656ec1c15e2993a2cca7c18cd5e6d3ae2307ba962907a382a6a9cf06a51827f07b8e3f4366a9f6dfa199cb8ebd307f5db28d208e4cfd2dc8a1a910a1c81e1f2a27d46df53bb6114b01823ce4eee49a863d0a368cac8e14d3be35d635a33bcd98c95b40d6735b1d96d5069f7df86964d91c8731b9fd2de950df6893dab662fcd4f6eb59b246c386f09f714e64e3924ce8552ce9934506a19b7c04b9031c1186fe743da876725685628640b92db548c9cf9d67e8faf7e19e28ef7255061654e187cd185add5bc8c0a93347b0b1766e714a38a5d0dcdcf1056d6282d61305eb32971b645901e79f5a52c1a690a96e659368c9cbf028b1d6caf5c45f85c89631876f2aa4da4416f75dcb40b310a0e57cbd6a12d146d52d2319bb3cb77686656dc09200dbd7ef4ed1f427b39da496219030997c8adf69608ad4a44413c9c4649607d714a1104b9778d5d9f0006ea0fad1a72d7a62f78c9a2819215556124b8c9527803da9549340eb18584e1b3e2da080bc7bd2a8f7ec1f68bbd97feef37fb959bdb8fef56ff00e8ff00ba54a91a3d94ff00e83174efadbe68db4bfee89fe9a54aa640799fe99665fa2aa7ea14a9514c3b1edd699fa9a952ae5ec9c656befa050edefeaa54a891ec8bf6678fabed587a97f7d1f14a955d9d2523f5495b3d9ee8dfe9a54a88fe002ff4c32b6ffe4a1ff687fc558b8fefeffedffd52a54bd7fa0926269bfdb4ff00ea35245f5c5feed2a556452cd1bdeabf34a952ae00cfffd9, 'm'),
-(2, '102', '102', 'cb5d451d6cdd223b1844a11f7563cced7c79325f', 'green', 'f', 'xxxx@gmail.com', NULL, 'm'),
-(3, '103', '103', 'yellow103', 'yellow', 'f', 'xxxx@gmail.com', NULL, 'm'),
-(4, '104', '104', 'blue104', 'blue', 'm', 'xxxx@gmail.com', NULL, 'm'),
-(5, '105', '105', 'black105', 'black', 'm', 'xxxx@gmail.com', NULL, 'm'),
-(6, '106', '106', 'aaa106', 'aaa', 'm', 'xxxx@gmail.com', NULL, 'm'),
-(7, '107', '107', 'bbb107', 'bbb', 'f', 'xxxx@gmail.com', NULL, 'm'),
-(8, '108', '108', 'ccc108', 'ccc', 'f', 'xxxx@gmail.com', NULL, 'm'),
-(9, '109', '109', 'eee109', 'eee', 'o', 'xxxx@gmail.com', NULL, 'm'),
-(10, '110', '110', 'rrr110', 'rrr', 'o', 'xxxx@gmail.com', NULL, 'm'),
-(11, '-', 'admin', '8dc9fa69ec51046b4472bb512e292d959edd2aef', 'admin', 'f', 'xxxx@gmail.com', NULL, 'a'),
-(12, '-', 'staff', '1ae50633fac67fb253d9047e5a91e30f9eb31d39', 'staff', 'o', 'xxxx@gmail.com', NULL, 's');
+INSERT INTO `user` (`id`, `number_room`, `username`, `password`, `name`, `gender`, `email`, `role`) VALUES
+(1, 101, 'R101', 'ce8fce17f94a3e67a09ea48b48d5ac02e55e7b6a', 'emmy', 'f', 'xxxx@gmail.com', 'm'),
+(2, 102, 'R102', 'b3626e36c0123c5886ebbfdeed486bd9d19d0cfb', 'Biw', 'f', 'xxxx@gmail.com', 'm'),
+(3, 103, 'R103', 'xxx', 'xxx', 'f', 'xxxx@gmail.com', 'm'),
+(4, 104, 'R104', 'xxx', 'xxx', 'm', 'xxxx@gmail.com', 'm'),
+(5, 105, 'R105', '0f2ce461f7ccca6fd04e33c364cdf251a4ff3815', 'barry', 'm', 'xxxx@gmail.com', 'm'),
+(6, 106, 'R106', 'xxx', 'xxx', 'm', 'xxxx@gmail.com', 'm'),
+(7, 107, 'R107', 'xxx', 'xxx', 'f', 'xxxx@gmail.com', 'm'),
+(8, 108, 'R108', 'xxx', 'xxx', 'f', 'xxxx@gmail.com', 'm'),
+(9, 109, 'R109', 'df9639defc0a6e967e11e03c178264631595a9d6', 'PAI', 'f', 'pai555@gmail.com', 'm'),
+(10, 110, 'R110', '97734ee6cddb56a110d613fcd96dbadf63645228', 'เตยเตย', 'f', 'toie11@gmail.com', 'm'),
+(11, 0, 'admin', '8dc9fa69ec51046b4472bb512e292d959edd2aef', 'admin', 'f', 'xxxx@gmail.com', 'a'),
+(12, 0, 'staff', 'e51157a25105c5db6deb0fcc52482ecb5ded2173', 'staff', 'o', 'xxxx@gmail.com', 's');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `bill`
---
-ALTER TABLE `bill`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `community_admin`
@@ -134,15 +173,27 @@ ALTER TABLE `community_admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `myroom`
+-- Indexes for table `images_bill`
 --
-ALTER TABLE `myroom`
-  ADD PRIMARY KEY (`user_id`);
+ALTER TABLE `images_bill`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `room_admin`
 --
 ALTER TABLE `room_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `showservices`
+--
+ALTER TABLE `showservices`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -159,13 +210,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `community_admin`
 --
 ALTER TABLE `community_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `images_bill`
+--
+ALTER TABLE `images_bill`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `room_admin`
 --
 ALTER TABLE `room_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `showservices`
+--
+ALTER TABLE `showservices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user`

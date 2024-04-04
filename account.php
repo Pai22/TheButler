@@ -90,7 +90,7 @@ if (!isset($_SESSION['id'])) {
                                     <div class="modal-body">
                                         <div class="mb-2">
                                             <label for="login" class="col-form-label">Username:</label>
-                                            <input type="text" class="form-control" id="username" name="login" disabled>
+                                            <input type="text" class="form-control" id="username" name="username" disabled>
                                         </div>
                                         <div class="mb-2">
                                             <label for="name" class="col-form-label">Name:</label>
