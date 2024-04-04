@@ -14,3 +14,4 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] == 'a')) {
   header("location:room.php");
   die();
 }
+?>

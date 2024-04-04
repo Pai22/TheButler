@@ -3,7 +3,7 @@ body {
   justify-content: center;
   align-content: center;
   min-height: 100vh;
-  background-image: url("1.jpg");
+  background-image: url("uploads/1.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 150%;
