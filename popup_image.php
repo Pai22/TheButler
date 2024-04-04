@@ -22,24 +22,19 @@ include_once 'dbConfig.php';
 
 <body>
     <?php
-    $room = $_GET['room'];
     $query = $db->query("SELECT * FROM images_bill ORDER BY uploadde_on DESC");
     $query1 = $db->query("SELECT * FROM user ");
     $row1 = $query1->fetch_assoc();
     if ($query->num_rows > 0) {
         while ($row = $query->fetch_assoc()) {
-            while($row1 = $query1->fetch_assoc()){
-                if($row1['number_room'] == $room){
-                    $imageURL = 'uploads/' . $row['file_name'];
+            $imageURL = 'uploads/' . $row['file_name'];
     ?>
-                    <img src="<?php echo $imageURL ?>" alt="" >
+            <img src="<?php echo $imageURL ?>" alt="" >
 
     <?php
 
                 }
             }
-        }
-    }
          else { ?>
         <p>No image found...</p>
     <?php } ?>

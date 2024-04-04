@@ -16,7 +16,7 @@ if (!isset($_SESSION['id'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <title>Account</title>
-    <<script>
+    <script>
         function Edit_Function(id,username,name,gender,email){
         //alert(id+login+gender+email+role+name);
         document.getElementById('user_id').value=id;
@@ -25,7 +25,7 @@ if (!isset($_SESSION['id'])) {
         document.getElementById('gender').value=gender;
         document.getElementById('email').value=email;
         }
-        </script>
+    </script>
 </head>
 
 <body style="background-color:#000000;">
@@ -40,11 +40,11 @@ if (!isset($_SESSION['id'])) {
                         <?php
                         $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
                         $room =  $_SESSION['room'];
-                        $sql = "select id,username,name,gender,email,image,number_room,role from user where number_room = $room";
+                        $sql = "select id,username,name,gender,email,number_room,role from user where number_room = $room";
                         $result = $conn->query($sql);
                         while ($row = $result->fetch()) {
                             if (isset($_SESSION['id']) && ($_SESSION['role'] == 'm')) {
-                                if ($row[7] == 'm') {
+                                if ($row[6] == 'm') {
                                     echo "<h4>Room " . $row["number_room"] . "</h4>
                             
                             <label class = col-lg-3 col-form-label>Username :</label>

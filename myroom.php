@@ -29,12 +29,24 @@ include_once 'dbConfig.php';
                     <div class="card-header text-white" style="background-color: #C6824B;">My Room</div>
                     <div class="card-body">
                         <div class="row">
-                            <label class="col-lg-3 col-form-label">No.room: 101</label>
+                            <label class="col-lg-3 col-form-label">No.room: <?php echo $_SESSION['room']; ?> </label>
                         </div>
                         <div class="row mt-3">
-                            <label class="col-lg-3 col-form-label">ค่าเช่า :</label>
-                            <input type=text name=username value="" required class=form-control disabled style="height:30px;width:100px">
+                            <?php
+                            $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
+                            $room =  $_SESSION['room'];
+                            $sql = "select user_number_room,price from room_admin where user_number_room = $room";
+                            $result = $conn->query($sql);
+                                while ($row = $result->fetch()) {
+                            ?>
+                                    <label class="col-lg-3 col-form-label">ค่าเช่า :</label>
+                                    <input type=text name=username value="<?php echo $row[1] ?>" required class=form-control disabled style="height:30px;width:100px">
+                                <?php
+                                }
+                             ?>
+
                         </div>
+
                         <div class="row mt-3">
                             <label class="col-lg-4 col-form-label">QR code:</label>
                             <div class="col-lg-8">

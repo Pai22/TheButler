@@ -4,7 +4,7 @@
     <h1 style="text-align: center; color:#C6824B ">The Butler</h1>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-      <?php echo $_SESSION['username']; ?> <span class="navbar-toggler-icon"></span>
+      <?php echo $_SESSION['name']; ?> <span class="navbar-toggler-icon"></span>
     </button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
