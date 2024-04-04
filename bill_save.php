@@ -6,7 +6,7 @@ $price = $_POST['price'];
 
 
 $conn = new PDO("mysql:host=localhost;dbname=butler;charset=utf8", "root", "");
-$sql = "INSERT INTO room_admin VALUES ('$id','$number_room','$price',NOW())";
+$sql = "INSERT INTO room_admin VALUES ('$id','$number_room','$price')";
 $query=$conn->exec($sql);
 // ทำการเพิ่มข้อมูลลงในฐานข้อมูล
 $conn = null;

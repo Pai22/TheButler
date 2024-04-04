@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['id']) && ($_SESSION['role'] == 'a')) {
+    header("location:login.php");
+    die();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,24 +43,25 @@ session_start();
                                 echo "<h4>Room " . $number_room . "</h4>";
                                 // แสดงข้อมูลอื่น ๆ ของห้องที่คุณต้องการ
                             }
-
+                        
                         ?>
-                            <h5 class="card-text">น้ำใช้ไป :</h5><input type=text id="num1" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
-                            <h5 class="card-text">ไฟใช้ไป:</h5><input type=text id="num2" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
-                            <h5 class="card-text">ค่าห้อง:</h5><input type=text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>
-                            <button onclick="calculate()">คำนวณ</button><br>
+                        <h5 class="card-text">น้ำใช้ไป :</h5><input type=text id="num1" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
+                        <h5 class="card-text">ไฟใช้ไป:</h5><input type=text id="num2" required class=form-control style="height:30px;width:150px" placeholder="ตอบเป็นหน่วย"><br>
+                        <h5 class="card-text">ค่าห้อง:</h5><input type=text id="num3" value="4000" class=form-control disabled style="height:30px;width:100px"><br>
+                        <button onclick="calculate()">คำนวณ</button><br>
 
-                            <form action="bill_save.php" method="post">
-                                <p id="number_room">
-                                <h5 class="card-text">ห้องหมายเลข :</h5><input type=text id="number_room" disabled value="<?php echo $number_room ?>" name="number_room" required class=form-control style="height:30px;width:100px"></p>
+                        <form action="bill_save.php" method="post">
+                            <p id="number_room">
+                            <h5 class="card-text">ห้องหมายเลข :</h5><input type=text id="number_room" 
+                            value="<?php echo $number_room ?>" name="number_room" required class=form-control style="height:30px;width:100px"></p>
 
-                            <?php
-                        }
-                            ?>
+                        <?php 
+                        } 
+                        ?>
                             <p id="result">
                             <h5 class="card-text">รวมทั้งหมด:</h5><input type=text id="price" name="price" required class=form-control style="height:30px;width:100px" oninput="calculate(this)"></p>
                             <button type="submit" class='btn btn-success mt-1'>บันทึก</button>
-                            </form>
+                        </form>
                     </div>
                 </div>
             </div>

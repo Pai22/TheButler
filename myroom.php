@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['id'])) {
-    header("location:login.php");
+if (isset($_SESSION['id']) && ($_SESSION['role'] !== 'm')) {
+    header("location:index.php");
     die();
 }
 include_once 'dbConfig.php';
