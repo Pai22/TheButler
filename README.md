@@ -1,4 +1,4 @@
-#หน้า login
+//หน้า login
 usrname   pw
 R101      em567
 R102      b446
