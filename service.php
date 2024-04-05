@@ -23,9 +23,9 @@ if (isset($_SESSION['id']) && ($_SESSION['role'] !== 's')) {
 </head>
 
 <body style="background-color: black;">
-    <div class="container">
-        <?php include "nav.php" ?>
 
+    <?php include "nav.php" ?>
+    <div class="container">
         <span>
             <div class="mt-5 mb-3 d-flex justify-content-between " style="float:left ;">
                 <h6 style="color: white;"><i class="bi bi-gear"></i> Service</h6>
